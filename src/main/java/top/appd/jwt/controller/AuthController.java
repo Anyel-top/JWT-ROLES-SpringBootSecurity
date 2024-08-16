@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 import top.appd.jwt.model.dto.AuthRequestDTO;
 import top.appd.jwt.model.dto.JwtResponseDTO;
 import top.appd.jwt.security.JwtService;
+import top.appd.jwt.services.UserDetailsServiceImpl;
+
+import java.util.logging.Logger;
 
 @RestController
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private static final Logger logger = Logger.getLogger(AuthController.class.getName());
 
     @Autowired
     public AuthController(AuthenticationManager authenticationManager, JwtService jwtService) {
@@ -29,7 +33,9 @@ public class AuthController {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword())
         );
+
         if (authentication.isAuthenticated()) {
+            logger.info("genera token");
             return JwtResponseDTO.builder()
                     .accessToken(jwtService.GenerateToken(authRequestDTO.getUsername()))
                     .build();

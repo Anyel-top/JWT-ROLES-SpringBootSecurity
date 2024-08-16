@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import top.appd.jwt.model.UserInfo;
 import top.appd.jwt.model.UserRole;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
